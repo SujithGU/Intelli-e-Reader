@@ -8,6 +8,7 @@ def make_url(search_word):
     url = template.format(search_word)
     return url
 
+# Function to retrieve the synonyms through scraping the appropriate classes.
 def scrape_syns(soup_obj):
     
     words = soup_obj.find_all('div', {'class': 'etbu2a30'})
@@ -32,16 +33,18 @@ def scrape_syns(soup_obj):
             least_relevant_syns.append(item.find('a', {'class' : 'css-1irfus7' }).text.rstrip())
 
     return most_relevant_syns, moderately_relevant_syns, least_relevant_syns
-    
+
+# Function to be called from another module.    
 def retrieve_syns(search_word):
-    ''' Run main program routine'''
-    
+
     most_relevant = list()
     moderately_relevant = list()
     least_relevant = list()
+
     html_data = requests.get(make_url(search_word))
     soup = BeautifulSoup(html_data.text,'html.parser') 
     most_relevant, moderately_relevant, least_relevant = scrape_syns(soup)
+
     if len(most_relevant) > 0:
         return_value = most_relevant
     elif len(moderately_relevant) > 0:
