@@ -2,6 +2,7 @@ import pandas as pd
 import csv
 import os
 import logging
+import sys
 
 '''
 Script used to 
@@ -10,6 +11,9 @@ Read the csv file 'word_pos_master_data.csv'
 2. Once the CEFR Level is finalised, using conversion map, CEFR levels are reduced to simpler level
 Write to a new csv file 'word_pos_modified_data.csv'
 '''
+if not os.path.exists('../Data Files/logs'):
+    os.mkdir('../Data Files/logs')
+
 logging.basicConfig(filename='../Data Files/logs/word_pos_master_to_modify_log_file.log',
                     filemode='w',
                     level=logging.DEBUG)

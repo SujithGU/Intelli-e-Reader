@@ -3,6 +3,9 @@ import logging
 import os
 import sys
 
+if not os.path.exists('../Data Files/logs'):
+    os.mkdir('../Data Files/logs')
+
 logging.basicConfig(filename='../Data Files/logs/fetch_cefr_log_file.log',
                     filemode='w',
                     level=logging.DEBUG)
