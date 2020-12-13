@@ -1,8 +1,12 @@
 import thesaurusScraper as ts
 import pandas as pd
 import time
+from pathlib import Path
 
-wordlist_data = pd.read_csv('/Users/prajyotsuvarna/Documents/College/Programming/word-level-survey/WordsTeachersAverage.csv')
+# Gets path to the root directory of the repository.
+parentDirPath = Path(__file__).parent.parent
+
+wordlist_data = pd.read_csv(str(parentDirPath) + '/Data Files/WordsTeachersAverage.csv')
 # Reduces data for levels > A
 difficult_wordlist = wordlist_data[wordlist_data['Teachers Avg'] >= 2]
 
