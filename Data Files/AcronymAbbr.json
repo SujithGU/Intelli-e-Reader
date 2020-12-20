@@ -1,0 +1,11 @@
+{
+    "ADJ": "aj",
+    "ADV": "av",
+    "CONJ": "cj",
+    "DET": "dt",
+    "NOUN": "n",
+    "VERB": "v",
+    "PRON": "pn",
+    "ADP": "pp",
+    "nan": "na"
+}
