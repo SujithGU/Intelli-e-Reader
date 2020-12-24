@@ -45,11 +45,11 @@ try:
 
     # iterate through the data frame and form a dictionary
     for row_index in df.index:
-        avg = (df['Level.Teachers.Average'][row_index]
-               + df['Level.Predicted.RF'][row_index]
-               + df['Level.Predicted.NN'][row_index]
-               + df['Level.Predicted.SVM'][row_index]) / 4
-        avg_list.append(int(avg))
+        # avg = (df['Level.Teachers.Average'][row_index]
+        #        + df['Level.Predicted.RF'][row_index]
+        #        + df['Level.Predicted.NN'][row_index]
+        #        + df['Level.Predicted.SVM'][row_index]) / 4
+        avg_list.append(df['Level.Teachers.Average'][row_index])
 
     # adding 'cefr avg' column
     df['cefr_level_avg'] = avg_list
