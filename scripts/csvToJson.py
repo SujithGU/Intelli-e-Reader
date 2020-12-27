@@ -32,4 +32,4 @@ def convertToJsonFile(relPath, oldFileName, newFileName):
     except:
         raise Exception('File does not exist')
 
-convertToJsonFile('/Data Files/', oldFileName='SynListThesaurus.csv',newFileName='ThesaurusDict.json')
+convertToJsonFile('/Data Files/', oldFileName='SynListSynonyms.csv',newFileName='SynonymsDict.json')
