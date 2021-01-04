@@ -14,7 +14,7 @@ logging.basicConfig(filename='../Data Files/logs/fetch_cefr_log_file.log',
 class Cefr:
     try:
         # Read the potential csv file
-        df = pd.read_csv("../Data Files/word_pos_modified_data.csv")
+        df = pd.read_csv("../Data Files/master_cefr.csv")
         logging.debug("Data read success")
 
         # Consisting of word + part of speech combination as key and cefr level as value
@@ -22,21 +22,22 @@ class Cefr:
 
         # Conversion map for part of speech
         conversion_map = {'DET': 'dt', 'VERB': 'v', 'NOUN': 'n', 'ADJ': 'aj', 'ADV': 'av', 'PRONOUN': 'pn', 'ADP': 'pp',
-                          'CONJ': 'cj'}
+                          'CONJ': 'cj', 'NAN': 'na'}
         df['wor_pos_map'] = df['pos'].replace(conversion_map)
 
         for row_index in df.index:
             combine = df['word'][row_index].lower() + "_" + df['wor_pos_map'][row_index]
-            word_pos_dict[combine] = df['cefr_level'][row_index]
+            word_pos_dict[combine] = df['cefr'][row_index]
 
-        def getCefr(self='no arg', part_of_speech='no arg'):
+        def getCefr(self, word, part_of_speech):
             """
             Use this method in order to receive the CEFR level of the word and part of speech combination
             :param self: word
+            :param word: word
             :param part_of_speech: part of speech of the word
             :return: reduced cefr level
             """
-            word = str(self).lower()
+            word = str(word).lower()
             pos = str(part_of_speech).lower()
             logging.debug(f"Requesting for {word} with part of speech {pos} ")
 
@@ -57,4 +58,3 @@ class Cefr:
 
     except:
         logging.error("Read Error ", sys.exc_info())
-
