@@ -1,13 +1,14 @@
 from pathlib import Path
 import json
 
+
 class SynRetriever:
 
     def __init__(self):
 
         # path to root directory of repo.
         path = str(Path(__file__).parent.parent)
-        
+
         # Retrieve the json data from both the files.
         try:
             with open(path + '/Data Files/ThesaurusDict.json') as thes_json_file:
@@ -17,8 +18,6 @@ class SynRetriever:
                 self.syn_json = json.load(syn_json_file)
         except:
             print('Error in retrieving file')
-
-
 
     def retrieveSynsByPos(self, word, Pos):
         """Functions retrieves only synonyms for PoS from both sources 
@@ -33,7 +32,6 @@ class SynRetriever:
         thes_list = self.thes_json.get(word + '_' + Pos)
         if thes_list is None:
             thes_list = []
-        
 
         syn_list = self.syn_json.get(word)
         if syn_list is None:
@@ -42,10 +40,9 @@ class SynRetriever:
         comb_list = thes_list + syn_list
         if len(comb_list) > 0:
             comb_list = self.refactor_list(comb_list)
-        
+
         return comb_list
 
-    
     def retrieveAllSyns(self, word):
         """Function retrieves synonyms for all PoS's
 
@@ -67,14 +64,12 @@ class SynRetriever:
             print(f'For PoS {pos_word} the syns are {syns}\n\n')
             if syns is not None:
                 cumulative_list += syns
-        
+
         if len(cumulative_list) > 0:
             cumulative_list = self.refactor_list(cumulative_list)
-        
+
         return cumulative_list
-                
-    
-    
+
     def refactor_list(self, oldList):
         """Method to refactor the lsit of duplicates and unwanted spaces.
 
@@ -88,9 +83,3 @@ class SynRetriever:
         oldList = list(dict.fromkeys(oldList))
         # Removes spaces before words.
         return list(map(str.lstrip, oldList))
-
-
-
-        
-
-
