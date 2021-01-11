@@ -61,7 +61,6 @@ class SynRetriever:
         for pos in possible_pos:
             pos_word = word + '_' + pos
             syns = self.thes_json.get(pos_word)
-            print(f'For PoS {pos_word} the syns are {syns}\n\n')
             if syns is not None:
                 cumulative_list += syns
 
