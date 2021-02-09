@@ -16,7 +16,7 @@ def convertToJsonFile(relPath, oldFileName, newFileName):
                 if line_count > 1:
                     rowObj = {
                         # key is the word and value is the synonyms as a list.
-                        row[0]: row[1][1:-1].replace('\'','').split(',')
+                        row[0]: row[1][1:-1].replace('\'','').replace(' ', '').split(',')
                     }
                     wordSynDict.update(rowObj)
                 line_count += 1
@@ -60,4 +60,4 @@ Un-comment the following line to generate cefr json
 '''
 # convert_to_json('/Data Files/', oldFileName='master_cefr.csv',newFileName='master_cefr.json')
 
-convertToJsonFile('/Data Files/', oldFileName='SynListSynonyms.csv', newFileName='SynonymsDict.json')
+convertToJsonFile('/Data Files/', oldFileName='SynListThesaurus.csv', newFileName='ThesaurusDict.json')

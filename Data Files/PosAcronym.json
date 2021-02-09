@@ -1,6 +1,6 @@
 {
     "NN": "n",
-    "NNS": "n", 
+    "NNS": "np", 
     "VB": "v", 
     "VBG": "v", 
     "VBD": "v",

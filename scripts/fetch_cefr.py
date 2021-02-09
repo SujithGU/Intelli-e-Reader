@@ -2,11 +2,19 @@ import pandas as pd
 import logging
 import os
 import sys
+import json
+from pathlib import Path
 
-if not os.path.exists('../Data Files/logs'):
-    os.mkdir('../Data Files/logs')
 
-logging.basicConfig(filename='../Data Files/logs/fetch_cefr_log_file.log',
+rootPath = str(Path(__file__).parent.parent)
+if not os.path.exists(rootPath + '/Data Files/logs'):
+    os.mkdir(rootPath + '/Data Files/logs')
+  
+# Load the master Cefr file.  
+with open(rootPath + '/Data Files/master_cefr.json') as json_file:
+    master_cefr = json.load(json_file)
+    
+logging.basicConfig(filename=rootPath + '/Data Files/logs/fetch_cefr_log_file.log',
                     filemode='w',
                     level=logging.DEBUG)
 
@@ -14,7 +22,7 @@ logging.basicConfig(filename='../Data Files/logs/fetch_cefr_log_file.log',
 class Cefr:
     try:
         # Read the potential csv file
-        df = pd.read_csv("../Data Files/master_cefr.csv")
+        df = pd.read_csv(rootPath + "/Data Files/master_cefr.csv")
         logging.debug("Data read success")
 
         # Consisting of word + part of speech combination as key and cefr level as value
@@ -55,6 +63,13 @@ class Cefr:
             :return: converted acronym for the part of speech
             """
             return Cefr.conversion_map.get(pos.upper())
+        
+        def checkWord(self, word):
+            
+            if master_cefr.get(word) is not None:
+                return True
+            return False
 
     except:
-        logging.error("Read Error ", sys.exc_info())
+        logging.error("Read Error")
+        # logging.error("Read Error", sys.exc_info())

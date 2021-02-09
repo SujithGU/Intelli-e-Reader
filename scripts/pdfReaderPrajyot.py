@@ -42,10 +42,9 @@ class PdfReader:
         x_word = str(word).replace('[,!?:.;]', '')
         synonym_list = self.syn.retrieveAllSyns(x_word)
         if synonym_list is not None and len(synonym_list) != 0:
-            # if part_of_speech == 'ns':
-            #     x_word = x_word[0:-1]
-            #     part_of_speech = 'n' 
-            cfr_level = self.level.getCefr(x_word.lower(), part_of_speech)
+            cfr_level = self.level.getCefr(x_word.lower() if part_of_speech != 'np' else x_word[0:-1].lower(),
+                                           part_of_speech if part_of_speech != 'np' else 'n')
+            part_of_speech = part_of_speech if part_of_speech != 'np' else 'n'
             if cfr_level is not None and cfr_level != 'A':
                 synonym_list_a = list()
                 synonym_list_b = list()
@@ -104,6 +103,9 @@ class PdfReader:
             print(f"Checking Sentence  '{sentence}' length of words to check= {len(list_of_words)}")
             operating_sentence = copy.deepcopy(sentence)
             for word, part_of_speech in list_of_words:
+                # if '-' in word:
+                #     if not self.level.checkWord(word) and self.level.checkWord(word.replace('-', '')):
+                #         word.replace('-', '')
                 operating_sentence = self.get_new_sentence(word, part_of_speech, operating_sentence)
                 # self.get_new_sentence(word, part_of_speech, operating_sentence)
             print('Final sentence:', operating_sentence)
@@ -126,17 +128,31 @@ class PdfReader:
         
         # Compute logic for deep comparision.
         print(scores)
-        if scores.get('A') is not None and (scores['A'] > 0.95 and abs(maxScore - scores['A']) <= 0.5) or maxLevel == 'A':
-            maxLevel = 'A'
-            returnVal = results[word+'_'+'A']
-        elif scores.get('B') is not None and maxLevel == 'B':
-            returnVal = results[word+'_'+'B']
-        elif scores.get('C') is not None and maxLevel == 'C':
-            returnVal = results[word+'_'+'C']
+        if self.iteration == 0 or (len(self.highestTracker) > 0 and maxScore > self.highestTracker[1]):
+                    
+            if scores.get('A') is not None or maxLevel == 'A':
+                maxLevel = 'A'
+                returnVal = results[word+'_'+'A']
+            elif scores.get('B') is not None and maxLevel == 'B':
+                returnVal = results[word+'_'+'B']
+            elif scores.get('C') is not None and maxLevel == 'C':
+                returnVal = results[word+'_'+'C']
+            self.appendToHighestTracker(maxLevel, results[word + '_' + maxLevel])
+        else:
+            pass
+            # Highest value was in the previous iteration.
+            
             
         return maxLevel, returnVal
         # pass
 
+
+    def appendToHighestTracker(self, level, *args):
+        for index, arg in enumerate(args):
+            self.highestTracker[index] = arg
+        self.highestTracker[3] = level
+        print(self.highestTracker)
+        
 
     def interact_with_semantic_checker(self, sentence, word_to_change, word_cefr_level, parts_of_speech):
         # TODO : Refactor Logic for Deep Semantic check
@@ -240,40 +256,42 @@ class PdfReader:
             with open(self.rootPath + '/Data Files/pdf/Treasure Island ( PDFDrive )_organized.pdf', 'rb') as f:
                 extracted_text = slate.PDF(f)
             # Read Just one page
-            pdf = str(extracted_text[1])
+            pdf = str(extracted_text[0])
             initial_list = pdf.split('.')
             for index, d in enumerate(initial_list):
                 initial_list[index] = d.replace("-\n", '').replace('\n', ' ').strip()
+                
+            print(initial_list)
 
             # print(f"List of Sentences we are operating on {initial_list}")
             # count = 0
-            for value in initial_list:
-                # each sentence
-                word_list = value.split()
-                tagged = pos_tag(word_list)
-                list_of_words_to_change = set()
-                for val1, val2 in tagged:
-                    if val2 not in pos_to_exclude:
-                        list_of_words_to_change.add((val1, self.pos_converter.get(val2)))
-                modified_pos_list.append((value, list_of_words_to_change))
+            # for value in initial_list:
+            #     # each sentence
+            #     word_list = value.split()
+            #     tagged = pos_tag(word_list)
+            #     list_of_words_to_change = set()
+            #     for val1, val2 in tagged:
+            #         if val2 not in pos_to_exclude:
+            #             list_of_words_to_change.add((val1, self.pos_converter.get(val2)))
+            #     modified_pos_list.append((value, list_of_words_to_change))
                 # count += 1
                 # if count == 3:
                 #     break
 
             # print(f"List of allowed words that we need to work on : {initial_list}")
             # print(f"Modified pos list:\n {modified_pos_list}")
-            self.get_new_pos_tagged(modified_pos_list)
+            # self.get_new_pos_tagged(modified_pos_list)
             
             print('Modified sentences:', self.modified_sentences)
 
-            with open('original.txt', 'w') as f:
-                for item in initial_list:
-                    f.write("%s\n" % item)
-            with open('modified.txt', 'w') as f:
-                for item in self.modified_sentences:
-                    f.write("%s\n" % item)
+            # with open('original.txt', 'w') as f:
+            #     for item in initial_list:
+            #         f.write("%s\n" % item)
+            # with open('modified.txt', 'w') as f:
+            #     for item in self.modified_sentences:
+            #         f.write("%s\n" % item)
 
-            print('Total time taken:', time.time() - start_time)
+            # print('Total time taken:', time.time() - start_time)
             # print(f"Synonym List for CEFR Level C having only B's : {self.syn_dict_c}")
             # print(f"Synonym List for CEFR Level B having only A's : {self.syn_dict_b}")
 
