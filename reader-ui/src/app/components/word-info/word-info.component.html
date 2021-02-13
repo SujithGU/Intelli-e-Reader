@@ -1,0 +1,28 @@
+<!-- <div class="caret-icon"></div>
+<div class="col-xs-12 pad-0" style="background: white;border-radius: 5px;">
+    <div class="col-xs-12 pad-0" style="text-align: center;border-bottom: 1px solid black;">History</div>
+    <div *ngIf="wordTree" class="col-xs-12 pad-0" style="text-align: center">
+        <div class="col-xs-12 pad-0" *ngFor="let wordObj of wordTree;let i = index" style="margin-bottom: 10px;">
+        <div>{{wordObj.word}} ({{wordObj.score}})</div>
+        <div class="arrow up"> </div>
+        </div>
+    </div>
+</div> -->
+<div style="max-height: 300px;overflow: auto;">
+    <ul *ngIf="wordTree" class="timeline">
+        <li *ngFor="let wordObj of wordTree; let i = index" class="timeline-event">
+          <label class="timeline-event-icon"></label>
+          <div class="timeline-event-copy">
+            <p class="timeline-event-thumbnail">{{showTitle(i)}}</p>
+            <h3>{{wordObj.word}}</h3>
+            <h4 *ngIf="wordObj.score">Score {{wordObj.score?.toFixed(4)}}</h4>
+            <h4>{{wordObj.cefr}}</h4>
+            <p style="padding: 0; margin: 0"><strong>Sentence</strong><br>{{wordObj.sentence}}</p>
+            <!-- <p><strong>Projektmanagement mit Scrum</strong><br>Ständiges Verbessern des agilen Entwicklungsprozesses beispielsweise durch Grunt, Yeoman, GIT, JIRA und BrowserStack.</p> -->
+          </div>
+        </li>
+      </ul>  
+</div>
+  <div *ngIf="!wordTree" class="noDetail">
+    No Children exist
+  </div>

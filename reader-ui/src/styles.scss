@@ -1,0 +1,80 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+body  {
+  background: black !important;
+}
+
+.book-library {
+    // height: 13px;
+    // margin-top: 9px;
+    // margin-left: 10px;
+    width: 100%;
+    height: 100%;
+    content: url(./assets/images/book-library.jpg);
+}
+
+.book-retro {
+  // height: 13px;
+  // margin-top: 9px;
+  // margin-left: 10px;
+  width: 100%;
+  height: 100%;
+  content: url(./assets/images/retrosupply-jLwVAUtLOAQ-unsplash.jpg);
+}
+
+.processing {
+  object-fit: contain;
+  height: 37px;
+  content: url(./assets/images/processing-icon.jpg);
+}
+
+mark {
+    // background: #e5322d;
+    // border: 1px solid black;
+    // border-radius: 10px;
+    // background: #e7e7e7;
+    background: yellow;
+    cursor: pointer;
+    transition: box-shadow 0.5s ease-in 0.1s !important;
+}
+
+mark:hover {
+  box-shadow: inset 40em 0 0 0 #713812;
+  color: white;
+}
+
+.pad-0 {
+    padding: 0;
+}
+
+.pad-5 {
+    padding: 5px;
+}
+
+.arrow {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+  }
+  
+  .right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+  }
+  
+  .left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+  }
+  
+  .up {
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+  }
+  
+  .down {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+  }
