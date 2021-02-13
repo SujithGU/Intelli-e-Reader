@@ -1,0 +1,26 @@
+<div class="col-xs-12 pad-0">
+    <div class="pad-0 home-left">
+        <div class="content-container">
+            <h1 class="reader-title" style="text-align: center;">Intell-e-Reader</h1>
+            <h4 class="reader-subtitle">Reading made simple</h4>
+            <div class="col-xs-12 pad-0 upload-btn-container">
+                <a class="uploader__btn tooltip--left active" id="pickfiles" href="javascript:;" title="Add more files"
+                    style="position: relative; z-index: 1;" (click)="fileChoose.click()">
+                    <span *ngIf="!showLoader">Upload Book</span>
+                    <img *ngIf="showLoader" id="loader" src="̱̱../../../assets/gifs/LoaderTp.gif">
+                </a>
+                <button class="btn btn-secondary convert-btn" style="display:none" (click)="convertFile()">
+                    <span class="processing"></span>
+                </button>
+                <input #fileChoose type="file" style="display: none" onclick="this.value = null"
+                    (change)="onFileChanged($event)">
+                <a *ngIf="fileName" style="display: block;margin-top: 12px;">{{fileName}}</a>
+            </div>
+        </div>
+        <!-- <a class="uploader__btn tooltip--left active" id="pickfiles" href="javascript:;" title="Add more files"
+            style="position: relative; z-index: 1;" (click)="navigatePage()">
+            <span>Navigate</span>
+        </a> -->
+    </div>
+    <div class="book-library"></div>
+</div>

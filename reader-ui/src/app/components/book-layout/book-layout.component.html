@@ -1,0 +1,52 @@
+<div class="col-xs-12 pad-0">
+    <div id="wrapper">
+        <div id="container">
+            <section class="open-book">
+                <header>
+                    <h1>Shashi Tharoor</h1>
+                    <h6>Shashi Tharoor</h6>
+                </header>
+                <article>
+                    <h2 class="chapter-title">{{bookTitle}}</h2>
+                    <div *ngIf="newSentences && newSentences.length > 0" class="col-xs-12 pad-0" style="margin-top:10px;">
+                        <div #readerContainer class="book-content">
+                            <div class="pad-5">
+                                <span *ngFor='let sent of newSentences; let i = index' [innerHTML]="sent"
+                                    (click)="clickFunc($event, i)">
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                <footer>
+                    <ol id="page-numbers">
+                        <li>1</li>
+                        <li>2</li>
+                    </ol>
+                </footer>
+            </section>
+    
+        </div>
+    </div>
+</div>
+<div *ngIf="showWordDetail" class='popover-div' [style.top.px]='topPos' [style.left.px]='leftPos' [style.bottom.px]="bottomPos">
+    <div class="{{caretClass}}"></div>
+    <app-word-info [wordDetails]="wordDetails">
+    </app-word-info>
+</div>
+
+<!-- Backup -->
+<!-- <div *ngIf="newSentences && newSentences.length > 0" class="col-xs-12 pad-0" style="margin-top:10px;">
+    <div #readerContainer class="book-content">
+        <div class="pad-5">
+            <span *ngFor='let sent of newSentences; let i = index' [innerHTML]="sent"
+                (click)="clickFunc($event, i)">
+            </span>
+        </div>
+    </div>
+    <div *ngIf="showWordDetail" class='popover-div' [style.top.px]='topPos' [style.left.px]='leftPos'>
+        <div class="caret-icon"></div>
+        <app-word-info [wordDetails]="wordDetails">
+        </app-word-info>
+    </div>
+</div> -->
