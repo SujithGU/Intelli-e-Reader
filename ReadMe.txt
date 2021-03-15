@@ -18,7 +18,7 @@ Directory Structure
 
 3. /test_folder - Notebook and the files to upload on Google Collab
 
-4. /presentation_folder - Power Point Presentation
+4. /ppt - Power Point Presentation
 
 
 Limitation:
