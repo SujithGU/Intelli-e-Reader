@@ -17,7 +17,7 @@ st2 = ']'
 
 data = {}
 
-file = open('../Data Files/english_profile_scrape.csv','w', newline='')
+file = open('../data_files/english_profile_scrape.csv', 'w', newline='')
 
 writer = csv.writer(file)
 writer.writerow(['word','pos','cefr'])

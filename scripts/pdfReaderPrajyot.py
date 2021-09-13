@@ -30,7 +30,7 @@ class PdfReader:
 
         
     def load_pdf(self, rootPath):
-        with open(rootPath + '/Data Files/PosAcronym.json') as acryJson:
+        with open(rootPath + '/data_files/PosAcronym.json') as acryJson:
             self.pos_converter = json.load(acryJson)
 
 
@@ -253,7 +253,7 @@ class PdfReader:
             pos_to_exclude = ['CC', 'CD', 'MD', 'IN', 'NNP', 'NNPS', 'PDT', 'DT', 'PRP', 'PRP$', 'PP', 'RP', 'TO', 'WDT', 'WP', 'WRB']
 
             # Read PDF
-            with open(self.rootPath + '/Data Files/pdf/Treasure Island ( PDFDrive )_organized.pdf', 'rb') as f:
+            with open(self.rootPath + '/data_files/pdf/Treasure Island ( PDFDrive )_organized.pdf', 'rb') as f:
                 extracted_text = slate.PDF(f)
             # Read Just one page
             pdf = str(extracted_text[0])

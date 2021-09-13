@@ -156,7 +156,7 @@ pos_converter = {'NN': 'n', 'NNS': 'n', 'VB': 'v', 'VBG': 'v', 'VBD': 'v',
                  'RB': 'av', 'RBR': 'av', 'RBS': 'av', 'IN': 'pp', 'CC': 'cj'}
 
 # Read PDF
-with open('../Data Files/pdf/Treasure Island ( PDFDrive )_organized.pdf', 'rb') as f:
+with open('../data_files/pdf/Treasure Island ( PDFDrive )_organized.pdf', 'rb') as f:
     extracted_text = slate.PDF(f)
 # Read Just one page
 pdf = str(extracted_text[1])
