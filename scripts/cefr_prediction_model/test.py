@@ -11,7 +11,7 @@ from tensorflow.keras.utils import to_categorical
 
 from config import Config
 from scripts.cefr_prediction_model import train
-from scripts.google_ngram_parser import get_ngram_data
+from scripts.google_ngram_parser import get_ngram_data_all
 import time
 
 
@@ -91,20 +91,22 @@ class Predictor:
         if pos is None or pos == '':
             n_pos = nltk.pos_tag([word])[0][1]
             pos = self.ngram_tag_dictionary[n_pos]
+
+        list_all = get_ngram_data_all(word=word, pos=pos)
         # 1
-        ngram_2013 = get_ngram_data(word=word, pos=pos, year=2013)
+        ngram_2013 = round(list_all[0],6)
         # 2
-        ngram_2014 = get_ngram_data(word=word, pos=pos, year=2014)
+        ngram_2014 = round(list_all[1],6)
         # 3
-        ngram_2015 = get_ngram_data(word=word, pos=pos, year=2015)
+        ngram_2015 = round(list_all[2],6)
         # 4
-        ngram_2016 = get_ngram_data(word=word, pos=pos, year=2016)
+        ngram_2016 = round(list_all[3],6)
         # 5
-        ngram_2017 = get_ngram_data(word=word, pos=pos, year=2017)
+        ngram_2017 = round(list_all[4],6)
         # 6
-        ngram_2018 = get_ngram_data(word=word, pos=pos, year=2018)
+        ngram_2018 = round(list_all[5],6)
         # 7
-        ngram_2019 = get_ngram_data(word=word, pos=pos, year=2019)
+        ngram_2019 = round(list_all[5],6)
         # 8
         word_count = train.count_words(word)
         # 9
@@ -158,6 +160,6 @@ if __name__ == '__main__':
     predictor = Predictor()
 
     start = time.time()
-    val = predictor.predict('reveal', 'VERB')
+    val = predictor.predict('triumvirate', 'NOUN')
     end = time.time()
     print(f'Final CEFR {val} {int(end - start)} secs')
