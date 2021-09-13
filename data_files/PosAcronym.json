@@ -1,0 +1,18 @@
+{
+    "NN": "n",
+    "NNS": "np", 
+    "VB": "v", 
+    "VBG": "v", 
+    "VBD": "v",
+    "VBN": "v", 
+    "VBP": "v", 
+    "VBZ": "v", 
+    "JJ": "aj", 
+    "JJR": "aj", 
+    "JJS": "aj",
+    "RB": "av", 
+    "RBR": "av", 
+    "RBS": "av", 
+    "IN": "pp", 
+    "CC": "cj"
+}
