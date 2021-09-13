@@ -6,8 +6,8 @@ import math
 Generate CEFR Master set and corresponding JSON file for the same
 """
 
-df_eng = pd.read_csv("../Data Files/modified_scrap_data.csv")
-df_teacher = pd.read_csv("../Data Files/word_pos_modified_data.csv")
+df_eng = pd.read_csv("../data_files/modified_scrap_data.csv")
+df_teacher = pd.read_csv("../data_files/word_pos_modified_data.csv")
 
 list1 = []
 list2 = []
@@ -110,4 +110,4 @@ for key, value in modified_dict_eng.items():
 
 final = {'word': list_word, 'pos': list_pos, 'cefr_int': list_cefr_int, 'cefr': list_cefr}
 fdf = pd.DataFrame(final)
-fdf.to_csv('../Data Files/master_cefr.csv', index=False)
+fdf.to_csv('../data_files/master_cefr.csv', index=False)
