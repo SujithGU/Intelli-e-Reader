@@ -58,6 +58,6 @@ def convert_to_json(relPath, oldFileName, newFileName):
 '''
 Un-comment the following line to generate cefr json
 '''
-# convert_to_json('/Data Files/', oldFileName='master_cefr.csv',newFileName='master_cefr.json')
+# convert_to_json('/data_files/', oldFileName='master_cefr.csv',newFileName='master_cefr.json')
 
-convertToJsonFile('/Data Files/', oldFileName='SynListThesaurus.csv', newFileName='ThesaurusDict.json')
+convertToJsonFile('/data_files/', oldFileName='SynListThesaurus.csv', newFileName='ThesaurusDict.json')

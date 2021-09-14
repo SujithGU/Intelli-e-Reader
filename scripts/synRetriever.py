@@ -11,10 +11,10 @@ class SynRetriever:
 
         # Retrieve the json data from both the files.
         try:
-            with open(path + '/Data Files/ThesaurusDict.json') as thes_json_file:
+            with open(path + '/data_files/ThesaurusDict.json') as thes_json_file:
                 self.thes_json = json.load(thes_json_file)
 
-            with open(path + '/Data Files/SynonymsDict.json') as syn_json_file:
+            with open(path + '/data_files/SynonymsDict.json') as syn_json_file:
                 self.syn_json = json.load(syn_json_file)
         except:
             print('Error in retrieving file')

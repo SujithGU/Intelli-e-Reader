@@ -2,7 +2,7 @@ import pandas as pd
 
 cols_to_use_2 = ['word', 'pos', 'cefr']
 
-ndf = pd.read_csv('../Data Files/english_profile_scrape.csv', usecols=cols_to_use_2, encoding='latin1')
+ndf = pd.read_csv('../data_files/english_profile_scrape.csv', usecols=cols_to_use_2, encoding='latin1')
 
 n_dict = {}
 
@@ -41,5 +41,5 @@ print(str(ndf['pos'][2]))
 # Write to file
 final = {'word': word_list, 'pos': pos_lis, 'cefr_int': cefr_avg, 'cefr': cefr_level}
 fdf = pd.DataFrame(final)
-fdf.to_csv('../Data Files/modified_scrap_data.csv', index=False)
+fdf.to_csv('../data_files/modified_scrap_data.csv', index=False)
 

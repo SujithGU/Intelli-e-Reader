@@ -11,10 +11,10 @@ Read the csv file 'word_pos_master_data.csv'
 2. Once the CEFR Level is finalised, using conversion map, CEFR levels are reduced to simpler level
 Write to a new csv file 'word_pos_modified_data.csv'
 '''
-if not os.path.exists('../Data Files/logs'):
-    os.mkdir('../Data Files/logs')
+if not os.path.exists('../data_files/logs'):
+    os.mkdir('../data_files/logs')
 
-logging.basicConfig(filename='../Data Files/logs/word_pos_master_to_modify_log_file.log',
+logging.basicConfig(filename='../data_files/logs/word_pos_master_to_modify_log_file.log',
                     filemode='w',
                     level=logging.DEBUG)
 
@@ -32,7 +32,7 @@ cefr_int = {'A1': 1, 'A2': 2, 'B1': 3, 'B2': 4, 'C1': 5, 'C2': 6}
 conv_map = {1: 'A', 2: 'A', 3: 'B', 4: 'B', 5: 'C', 6: 'C'}
 
 try:
-    df = pd.read_csv('../Data Files/word_pos_master_data.csv', usecols=cols_to_use)
+    df = pd.read_csv('../data_files/word_pos_master_data.csv', usecols=cols_to_use)
 
     # change CEFR levels to numbers in order to take avg of 4 Prediction algorithms
     df['Level.Teachers.Average'] = df['Level.Teachers.Average'].replace(cefr_int)
@@ -66,13 +66,13 @@ try:
     # renaming to col name to lower case
     new_df = new_df.rename(columns={'Word': 'word', 'PoS': 'pos'})
 
-    if not os.path.isfile('../Data Files/word_pos_modified_data.csv'):
+    if not os.path.isfile('../data_files/word_pos_modified_data.csv'):
         # Create a new csv with modified columns
-        new_df.to_csv('../Data Files/word_pos_modified_data.csv', index=False)
+        new_df.to_csv('../data_files/word_pos_modified_data.csv', index=False)
     else:
-        os.remove('../Data Files/word_pos_modified_data.csv')
+        os.remove('../data_files/word_pos_modified_data.csv')
         # Create a new csv with modified columns
-        new_df.to_csv('../Data Files/word_pos_modified_data.csv', index=False)
+        new_df.to_csv('../data_files/word_pos_modified_data.csv', index=False)
     if len(new_df) == len(df):
         logging.debug("Data Converted successfully")
     else:
