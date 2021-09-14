@@ -1,0 +1,44 @@
+Word,Synonyms,Level
+chat,"['cat', 'conversation', 'talk', 'discuss']",A
+travel,"['trip', 'journey', 'tourist', 'ride']",A
+toast,"['bread', 'fried', 'drink', 'grilled', 'glass']",A
+sightseeing,['tourist'],A
+journey,"['trip', 'path', 'adventure', 'road', 'flight', 'way', 'ride']",A
+guide,['guidebook'],A
+acquire,"['gain', 'purchase', 'buy', 'obtain', 'develop', 'learn', 'get']",B
+ambitious,"['challenging', 'bold']",B
+assess,"['assessment', 'estimate', 'appraise', 'measure', 'judge', 'appreciate', 'weigh', 'analyse', 'identify']",B
+breathtaking,"['impressive', 'stunning', 'amazing', 'astonishing']",B
+brief,"['short', 'briefly', 'summary', 'anyway', 'memory', 'inform', 'quick', 'short-term', 'letter']",B
+courtesy,"['politeness', 'kindness']",B
+conjunction,"['concert', 'combination', 'parallel', 'cooperation', 'connection', 'link', 'relationship', 'association', 'partnership', 'joint', 'affair']",B
+witty,['spiritual'],B
+voyage,"['trip', 'journey', 'travel', 'tour']",B
+vital,"['essential', 'crucial', 'important', 'key', 'decisive', 'necessary', 'basic', 'capital', 'central', 'major', 'significant']",B
+trivial,"['minor', 'unimportant']",B
+sympathy,"['affection', 'understanding', 'sympathetic', 'friendliness']",B
+stimulate,"['encourage', 'boost', 'promote', 'inspire']",B
+souvenir,['memory'],B
+queue,"['cola', 'tail', 'row']",B
+parallel,"['side', 'conjunction', 'alternative', 'shadow', 'informal', 'similar']",B
+alliance,"['partnership', 'ring', 'allied', 'union', 'league']",C
+charisma,['charm'],C
+acquaintance,['knowledge'],C
+clumsiness,['clumsy'],C
+catastrophe,"['disaster', 'tragedy']",C
+bias,"['prejudice', 'means']",C
+bureaucracy,['paperwork'],C
+coherence,"['coherent', 'consistent', 'unity']",C
+commemorate,"['celebrate', 'mark', 'memorial', 'remember', 'observe']",C
+curb,"['suppress', 'contain', 'stop', 'reduce', 'limit', 'restrict', 'restrain', 'combat', 'brake', 'pavement', 'counter']",C
+dazzle,"['glare', 'awe']",C
+detrimental,"['harmful', 'negative', 'unfavourable', 'disastrous', 'disruptive', 'bad']",C
+dispute,"['conflict', 'controversy', 'disagreement', 'quarrel', 'argument', 'difference']",C
+eminent,"['prominent', 'distinguished', 'renowned', 'outstanding', 'well-known', 'famous', 'leading']",C
+envisage,"['consider', 'imagine', 'contemplate', 'foresee', 'anticipate', 'conceive', 'predict']",C
+facilitate,"['ease', 'assist', 'promote', 'provide', 'help', 'convenience', 'convenient', 'enable', 'simplify', 'encourage', 'promotion', 'allow', 'contribute', 'enhance', 'support']",C
+horizon,"['term', 'sight', 'prospect']",C
+hypocritical,['hypocrisy'],C
+interim,"['temporary', 'intermediate', 'preliminary', 'progress', 'transition', 'temporarily', 'interval']",C
+juvenile,"['youth', 'minor', 'young', 'child', 'junior', 'adolescent', 'immature', 'childish', 'teenager', 'teenage']",C
+meticulous,"['thorough', 'careful']",C

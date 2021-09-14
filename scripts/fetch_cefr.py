@@ -7,14 +7,14 @@ from pathlib import Path
 
 
 rootPath = str(Path(__file__).parent.parent)
-if not os.path.exists(rootPath + '/data_files/logs'):
-    os.mkdir(rootPath + '/data_files/logs')
+if not os.path.exists(rootPath + '/Data Files/logs'):
+    os.mkdir(rootPath + '/Data Files/logs')
   
 # Load the master Cefr file.  
-with open(rootPath + '/data_files/master_cefr.json') as json_file:
+with open(rootPath + '/Data Files/master_cefr.json') as json_file:
     master_cefr = json.load(json_file)
     
-logging.basicConfig(filename=rootPath + '/data_files/logs/fetch_cefr_log_file.log',
+logging.basicConfig(filename=rootPath + '/Data Files/logs/fetch_cefr_log_file.log',
                     filemode='w',
                     level=logging.DEBUG)
 
@@ -22,7 +22,7 @@ logging.basicConfig(filename=rootPath + '/data_files/logs/fetch_cefr_log_file.lo
 class Cefr:
     try:
         # Read the potential csv file
-        df = pd.read_csv(rootPath + "/data_files/master_cefr.csv")
+        df = pd.read_csv(rootPath + "/Data Files/master_cefr.csv")
         logging.debug("Data read success")
 
         # Consisting of word + part of speech combination as key and cefr level as value

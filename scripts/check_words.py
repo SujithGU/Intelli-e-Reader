@@ -5,9 +5,9 @@ Dummy file to check the numbers. DELETE LATER
 '''
 cols_to_use = ['Synonyms']
 
-df1 = pd.read_csv('../data_files/word_pos_modified_data.csv')
-df2 = pd.read_csv('../data_files/modified_scrap_data.csv')
-df = pd.read_csv('../data_files/SynListSynonyms.csv', usecols=cols_to_use)
+df1 = pd.read_csv('../Data Files/word_pos_modified_data.csv')
+df2 = pd.read_csv('../Data Files/modified_scrap_data.csv')
+df = pd.read_csv('../Data Files/SynListSynonyms.csv', usecols=cols_to_use)
 
 list_data_1 = list(df1['word'])
 list_data_2 = list(df2['word'])
