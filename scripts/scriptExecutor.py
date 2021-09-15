@@ -1,15 +1,16 @@
 import fetchWordSyns as fws
 import csvToJson as c2j
-import testCefrLevel as tcl
+import rankSyns as rs
 import json
 from pathlib import Path
 
 
 parentDirPath = Path(__file__).parent.parent
-tcl_obj = tcl.TestCefrLevel()
+tcl_obj = rs.RankSyns()
+
 # Fetch word syns
-fws_obj = fws.FetchWordSyns()
-fws_obj.main('synonyms')
+# fws_obj = fws.FetchWordSyns()
+# fws_obj.main('synonyms')
 
 # convert 2 column CSV to JSON.
 # c2j.convertToJsonFile('/', oldFileName='ModelWords_thesaurus.csv',

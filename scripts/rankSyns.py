@@ -9,7 +9,7 @@ from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords
 
 
-class TestCefrLevel:
+class RankSyns:
 
     def __init__(self) -> None:
         self.nlp = spacy.load('en_core_web_md')
@@ -25,18 +25,6 @@ class TestCefrLevel:
             self.master_cefr_C = self.master_cefr[self.master_cefr['cefr'] == 'C']
 
     def rank_syns(self, orig_word, synList):
-
-        # Lemmatization
-        # lemmatizer = WordNetLemmatizer()
-
-        # new_syns
-        # new_syns = set()
-        # for i in range(len(synList)):
-        #     words = nltk.word_tokenize(synList[i])
-        #     # lemmatize if it's not a stop word
-        #     words = [lemmatizer.lemmatize(word) for word in words if word not in set(
-        #         stopwords.words('english'))]
-        #     new_syns.add(words[0])
 
         doc1 = self.nlp(orig_word)
         word_distances = []
