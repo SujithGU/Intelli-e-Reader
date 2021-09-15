@@ -49,6 +49,8 @@ Instructions to Use:
    The resultant of the solution would be training models and a graph to depict the training vs validation set accuracy along with their loss curves
 2. test.py under /scripts/cefr_prediction_model can be run by specifying the 'word' and 'pos'. The resultant would be the CEFR level of the specified word. As of now result
    of Random Forest classifier is returned and is not combined with the result of NN model
+3. Running the file user_level_model.py trains a Random Forest model on the user retrieved level data present in file /data_files/user_level_mockdata.csv and stores a model "UserTestModel.sav"
+4. To determine the user's CEFR level, the model can be loaded using 'picke.load(filename)' and running the code model.predict([a,b,c]) where a,b,c are averages of distances of synonyms selected by the user in the test.
 
 
 Other Important Scripts:
