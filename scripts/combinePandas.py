@@ -14,7 +14,7 @@ thes_pd = pd.read_csv('ModelWords_thesaurus.csv')
 # with open(str(parentDirPath) + '/ModelWords_thesaurus.json', 'r') as jsonFile:
 #     modelwords_thes = json.load(jsonFile)
 
-with open(str(parentDirPath) + '/Data Files/master_cefr.json', 'r') as jsonFile:
+with open(str(parentDirPath) + '/data_files/master_cefr.json', 'r') as jsonFile:
     master_cefr_json = json.load(jsonFile)
 
 # Convert str of list format into list
@@ -72,7 +72,7 @@ for index, row in thes_pd.iterrows():
             }
 
 try:
-    with open(str(parentDirPath) + '/Data Files/' + 'ModelWords_combined.json', 'w') as outfile:
+    with open(str(parentDirPath) + '/data_files/' + 'ModelWords_combined.json', 'w') as outfile:
         json.dump(combined_dict, outfile)
     print('Success: File created')
 except:

@@ -30,7 +30,7 @@ class FetchWordSyns:
         self.difficult_wordlist = [(levelA_words, 'A'),
                                    (levelB_words, 'B'), (levelC_words, 'C')]
 
-        with open(str(parentDirPath) + '/Data Files/master_cefr.json', 'r') as jsonFile:
+        with open(str(parentDirPath) + '/data_files/master_cefr.json', 'r') as jsonFile:
             self.master_cefr = json.load(jsonFile)
 
     def checkSynLevel(self, wordLevel, syns):

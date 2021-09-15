@@ -9,8 +9,9 @@ parentDirPath = Path(__file__).parent.parent
 scraper_obj = ss.Scraper()
 
 
-wordlist_data = pd.read_csv(str(parentDirPath) + '/Data Files/WordsTeachersAverage.csv')
-with open(str(parentDirPath) + '/Data Files/AcronymAbbr.json', 'r') as jsonFile:
+wordlist_data = pd.read_csv(
+    str(parentDirPath) + '/data_files/WordsTeachersAverage.csv')
+with open(str(parentDirPath) + '/data_files/AcronymAbbr.json', 'r') as jsonFile:
     pos_dict = json.load(jsonFile)
 # Reduces data for levels > A
 difficult_wordlist = wordlist_data[wordlist_data['Teachers Avg'] >= 2]
@@ -38,5 +39,5 @@ for index, row in difficult_wordlist.iterrows():
     print(f'{count} of {len(difficult_wordlist)} completed ', end='\r')
 
 df = pd.DataFrame(extracted_els)
-df.to_csv('WordsSynListNew.csv', index=False) 
+df.to_csv('WordsSynListNew.csv', index=False)
 print(f'\n Time taken: {time.time() - start_time}s')

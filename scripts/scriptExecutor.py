@@ -17,7 +17,7 @@ fws_obj.main('synonyms')
 
 # Retrieve the json data from both the files.
 # try:
-#     with open(str(parentDirPath) + '/Data Files/ModelWords_combined.json', 'r') as json_file:
+#     with open(str(parentDirPath) + '/data_files/ModelWords_combined.json', 'r') as json_file:
 #         modelwords_json = json.load(json_file)
 
 #     for key in modelwords_json.keys():
@@ -29,7 +29,7 @@ fws_obj.main('synonyms')
 #         # print(distances[:4])
 #         # print('------------------------------')
 
-#     with open(str(parentDirPath) + '/Data Files/' + 'ModelWords_ranked.json', 'w') as outfile:
+#     with open(str(parentDirPath) + '/data_files/' + 'ModelWords_ranked.json', 'w') as outfile:
 #         json.dump(modelwords_json, outfile)
 #     print('Success: File created')
 # except:

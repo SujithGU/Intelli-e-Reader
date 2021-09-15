@@ -6,7 +6,7 @@ from sklearn import metrics
 import pickle
 
 # import data
-data = pd.read_csv('Data Files/user_level_mockdata.csv')
+data = pd.read_csv('data_files/user_level_mockdata.csv')
 
 df = data[['Avg_A', 'Avg_B', 'Avg_C', 'Level']]
 
