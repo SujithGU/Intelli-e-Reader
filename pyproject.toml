@@ -23,7 +23,8 @@ dependencies = [
     "sentence-transformers==6.0.0",
     "torch==2.13.0",
     "pandas==3.0.3",
-    "ipykernel"
+    "ipykernel",
+    "pyarrow"
 ]
 
 [project.optional-dependencies]
