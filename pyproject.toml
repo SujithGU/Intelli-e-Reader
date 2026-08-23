@@ -12,21 +12,25 @@ authors = [
     { name = "Sujith Gunjur Umapathy" },
     { name = "Prajyot Suvarna" },
 ]
-requires-python = ">=3.10"
+requires-python = ">=3.11"
+# Pinned to versions verified working on Python 3.12 (see README for how they
+# were tested). `pip install -e .` installs exactly these.
 dependencies = [
-    "Flask",
-    "flask-cors",
-    "nltk",
-    "pymupdf",
-    "sentence-transformers",
-    "torch",
-    "pandas",
+    "Flask==3.1.3",
+    "flask-cors==6.0.5",
+    "nltk==3.10.3",
+    "pymupdf==1.28.2",
+    "sentence-transformers==6.0.0",
+    "torch==2.13.0",
+    "pandas==3.0.3",
 ]
 
-# scripts/cefr_prediction_model/{train,test}.py and user_level_model/train.py train
-# the CEFR-prediction models themselves (separate from running the live demo,
-# which reads the pre-built data/master_cefr.csv). Not yet verified on a modern
-# Python -- see requirements.txt.
+# src/intelli_e_reader/cefr_model/{train,test}.py and
+# src/intelli_e_reader/user_level_model/train.py train the CEFR-prediction
+# models themselves (separate from running the live demo, which reads the
+# pre-built data/master_cefr.csv). Left unpinned since none of this has been
+# ported/tested on a modern Python yet -- install with
+# `pip install -e ".[training]"` and expect to have to fix things.
 [project.optional-dependencies]
 training = [
     "tensorflow",

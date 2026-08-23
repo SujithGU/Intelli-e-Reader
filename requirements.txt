@@ -1,26 +1,5 @@
-# Pinned, verified-working versions (Python 3.12) for the core app: the
-# Flask API (app.py) that the Angular frontend (reader-ui/) talks to.
-# `pip install -r requirements.txt` also installs this repo's own
-# src/intelli_e_reader package in editable mode (see pyproject.toml), which
-# app.py and the scripts under src/ import from.
+# All dependencies (pinned to verified-working versions) are declared in
+# pyproject.toml. This file exists only for tools/workflows that expect a
+# requirements.txt to be present -- `pip install -r requirements.txt` and
+# `pip install -e .` do exactly the same thing.
 -e .
-
-Flask==3.1.3
-flask-cors==6.0.5
-nltk==3.10.3
-pymupdf==1.28.2
-sentence-transformers==6.0.0
-torch==2.13.0
-pandas==3.0.3
-
-# After installing, download the NLTK data these scripts need:
-#   python -c "import nltk; nltk.download('averaged_perceptron_tagger_eng'); nltk.download('stopwords')"
-
-# --- Not yet verified on a modern Python ---
-# src/intelli_e_reader/cefr_model/{train,test}.py and
-# src/intelli_e_reader/user_level_model/train.py train the CEFR-prediction
-# models themselves (separate from running the live demo, which reads the
-# pre-built data/master_cefr.csv). Their extra dependencies are listed under
-# the "training" optional-dependencies group in pyproject.toml
-# (tensorflow, keras, scikit-learn, matplotlib, spacy, selenium,
-# beautifulsoup4) -- none of that has been ported/tested yet.
