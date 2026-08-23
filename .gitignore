@@ -8,7 +8,6 @@
 .vscode/*
 
 __pycache__/
-scripts/__pycache__/
 
 ### macOS ###
 .DS_Store
@@ -54,3 +53,26 @@ wheels/
 *.egg
 
 .idea/
+
+### Node / Angular (reader-ui) ###
+node_modules/
+npm-debug.log*
+reader-ui/dist/
+reader-ui/.angular/
+reader-ui/.sass-cache/
+
+### Run artifacts / generated output ###
+data/logs/
+data/output/
+data/uploads/
+*.log
+data/.Rapp.history
+
+### Trained model artifacts (regenerate via src/intelli_e_reader/cefr_model/train.py) ###
+models/cefr_prediction/optimal_models/
+models/cefr_prediction/*.h5
+models/cefr_prediction/*.pkl
+
+### Local-only, not published ###
+Report/
+ppt/

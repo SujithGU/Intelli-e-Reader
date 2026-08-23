@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "intelli-e-reader"
+version = "0.1.0"
+description = "NLP tool that simplifies text complexity using CEFR levels"
+readme = "README.md"
+license = { file = "LICENSE" }
+authors = [
+    { name = "Sujith Gunjur Umapathy" },
+    { name = "Prajyot Suvarna" },
+]
+requires-python = ">=3.10"
+dependencies = [
+    "Flask",
+    "flask-cors",
+    "nltk",
+    "pymupdf",
+    "sentence-transformers",
+    "torch",
+    "pandas",
+]
+
+# scripts/cefr_prediction_model/{train,test}.py and user_level_model/train.py train
+# the CEFR-prediction models themselves (separate from running the live demo,
+# which reads the pre-built data/master_cefr.csv). Not yet verified on a modern
+# Python -- see requirements.txt.
+[project.optional-dependencies]
+training = [
+    "tensorflow",
+    "keras",
+    "scikit-learn",
+    "matplotlib",
+    "spacy",
+    "selenium",
+    "beautifulsoup4",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]

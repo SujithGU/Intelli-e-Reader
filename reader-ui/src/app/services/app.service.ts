@@ -4,6 +4,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { throwError as observableThrowError, Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { DummyResponse } from '../models/dummy-resp';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ import { DummyResponse } from '../models/dummy-resp';
 export class AppService {
 
   fileDetails:any;
-  endpoint = 'http://b0183874deba.ngrok.io/';
+  endpoint = environment.apiUrl + '/';
   wordTree: any;
   book: string;
   bookName: string;
