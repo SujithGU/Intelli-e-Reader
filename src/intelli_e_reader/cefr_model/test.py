@@ -29,7 +29,7 @@ class Predictor:
                                      'VBP': 'VERB', 'WDT': '', 'WP': '', 'WP$': '', 'WRB': '', 'EXC': ''}
 
         # Read the all all_english_words_tagged_file for encoding purpose - Contains 370,100 words
-        df = pd.read_csv(f'{Config.DATA_FOLDER}/all_english_words_tagged.csv')
+        df = pd.read_csv(f'{Config.PROCESSED_DATA_FOLDER}/all_english_words_tagged.csv')
 
         # Encode words
         self.word_list = np.array(df['eng_words'])

@@ -36,10 +36,10 @@ class NgramGenerator:
 
 if __name__ == '__main__':
 
-    ngram = NgramGenerator(file_location=f'{Config.DATA_FOLDER}/master_cefr.csv',
+    ngram = NgramGenerator(file_location=f'{Config.PROCESSED_DATA_FOLDER}/master_cefr.csv',
                            word_string='word',
                            pos_string='pos',
-                           save_location=f'{Config.DATA_FOLDER}/master_cefr_with_ngram.csv')
+                           save_location=f'{Config.PROCESSED_DATA_FOLDER}/master_cefr_with_ngram.csv')
 
     ngram.generate_ngram_data()
     ngram.save_data()

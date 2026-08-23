@@ -10,8 +10,8 @@ scraper_obj = ss.Scraper()
 
 
 wordlist_data = pd.read_csv(
-    str(parentDirPath) + '/data/WordsTeachersAverage.csv')
-with open(str(parentDirPath) + '/data/AcronymAbbr.json', 'r') as jsonFile:
+    str(parentDirPath) + '/data/raw/teacher_survey_avg_scores.csv')
+with open(str(parentDirPath) + '/data/raw/pos_acronym_map.json', 'r') as jsonFile:
     pos_dict = json.load(jsonFile)
 # Reduces data for levels > A
 difficult_wordlist = wordlist_data[wordlist_data['Teachers Avg'] >= 2]

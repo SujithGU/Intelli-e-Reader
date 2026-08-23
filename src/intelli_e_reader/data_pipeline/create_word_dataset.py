@@ -47,7 +47,7 @@ class Tagger:
 
 if __name__ == '__main__':
 
-    tagger = Tagger(file=f'{Config.DATA_FOLDER}/all_english_words.json',
-                    save_location=f'{Config.DATA_FOLDER}/all_english_words_tagged.csv')
+    tagger = Tagger(file=f'{Config.RAW_DATA_FOLDER}/all_english_words.json',
+                    save_location=f'{Config.PROCESSED_DATA_FOLDER}/all_english_words_tagged.csv')
     tagger.read_and_tag()
     tagger.save_file()

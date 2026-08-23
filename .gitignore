@@ -73,6 +73,10 @@ models/cefr_prediction/optimal_models/
 models/cefr_prediction/*.h5
 models/cefr_prediction/*.pkl
 
+### Processed data (regenerate via `python -m intelli_e_reader.data_utils`) ###
+data/processed/*.parquet
+
 ### Local-only, not published ###
 Report/
 ppt/
+context.md

@@ -6,10 +6,10 @@ import sys
 
 '''
 Script used to 
-Read the csv file 'word_pos_master_data.csv' 
+Read the csv file 'teacher_survey_raw.csv' 
 1. Average of all the predictions are considered for the final CEFR Level
 2. Once the CEFR Level is finalised, using conversion map, CEFR levels are reduced to simpler level
-Write to a new csv file 'word_pos_modified_data.csv'
+Write to a new csv file 'teacher_survey_cefr_ratings.csv'
 '''
 if not os.path.exists('../data/logs'):
     os.mkdir('../data/logs')
@@ -18,10 +18,10 @@ logging.basicConfig(filename='../data/logs/word_pos_master_to_modify_log_file.lo
                     filemode='w',
                     level=logging.DEBUG)
 
-# list of columns to ignore from, word_pos_master_data.csv
+# list of columns to ignore from, teacher_survey_raw.csv
 cols_to_ignore = ['X2000', 'X2001', 'X2002', 'X2003', 'X2004', 'X2005', 'X2006', 'X2007', 'AvrgOfYears', 'Teachers Avg']
 
-# list of columns to use, from word_pos_master_data.csv
+# list of columns to use, from teacher_survey_raw.csv
 cols_to_use = ['Word', 'PoS', 'Level.Teachers.Average', 'Level.Predicted.RF', 'Level.Predicted.NN',
                'Level.Predicted.SVM']
 
@@ -32,7 +32,7 @@ cefr_int = {'A1': 1, 'A2': 2, 'B1': 3, 'B2': 4, 'C1': 5, 'C2': 6}
 conv_map = {1: 'A', 2: 'A', 3: 'B', 4: 'B', 5: 'C', 6: 'C'}
 
 try:
-    df = pd.read_csv('../data/word_pos_master_data.csv', usecols=cols_to_use)
+    df = pd.read_csv('../data/raw/teacher_survey_raw.csv', usecols=cols_to_use)
 
     # change CEFR levels to numbers in order to take avg of 4 Prediction algorithms
     df['Level.Teachers.Average'] = df['Level.Teachers.Average'].replace(cefr_int)
@@ -66,13 +66,13 @@ try:
     # renaming to col name to lower case
     new_df = new_df.rename(columns={'Word': 'word', 'PoS': 'pos'})
 
-    if not os.path.isfile('../data/word_pos_modified_data.csv'):
+    if not os.path.isfile('../data/raw/teacher_survey_cefr_ratings.csv'):
         # Create a new csv with modified columns
-        new_df.to_csv('../data/word_pos_modified_data.csv', index=False)
+        new_df.to_csv('../data/raw/teacher_survey_cefr_ratings.csv', index=False)
     else:
-        os.remove('../data/word_pos_modified_data.csv')
+        os.remove('../data/raw/teacher_survey_cefr_ratings.csv')
         # Create a new csv with modified columns
-        new_df.to_csv('../data/word_pos_modified_data.csv', index=False)
+        new_df.to_csv('../data/raw/teacher_survey_cefr_ratings.csv', index=False)
     if len(new_df) == len(df):
         logging.debug("Data Converted successfully")
     else:

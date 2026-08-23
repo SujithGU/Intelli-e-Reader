@@ -23,15 +23,15 @@ dependencies = [
     "sentence-transformers==6.0.0",
     "torch==2.13.0",
     "pandas==3.0.3",
+    "ipykernel"
 ]
 
-# src/intelli_e_reader/cefr_model/{train,test}.py and
-# src/intelli_e_reader/user_level_model/train.py train the CEFR-prediction
-# models themselves (separate from running the live demo, which reads the
-# pre-built data/master_cefr.csv). Left unpinned since none of this has been
-# ported/tested on a modern Python yet -- install with
-# `pip install -e ".[training]"` and expect to have to fix things.
 [project.optional-dependencies]
+# src/intelli_e_reader/cefr_model/{train,test}.py trains the CEFR-prediction
+# model itself (separate from running the live demo, which reads the
+# pre-built data/processed/family2_word_synonyms.parquet). Left unpinned
+# since none of this has been ported/tested on a modern Python yet --
+# install with `pip install -e ".[training]"` and expect to have to fix things.
 training = [
     "tensorflow",
     "keras",
@@ -40,6 +40,16 @@ training = [
     "spacy",
     "selenium",
     "beautifulsoup4",
+]
+
+# For exploring data/ in a notebook (e.g. notebook/Dataset-EDA.ipynb), and for
+# src/intelli_e_reader/data_utils.py (pyarrow is needed for parquet I/O).
+# `pip install -e ".[notebook]"`.
+notebook = [
+    "jupyter",
+    "matplotlib",
+    "seaborn",
+    "pyarrow"
 ]
 
 [tool.setuptools.packages.find]

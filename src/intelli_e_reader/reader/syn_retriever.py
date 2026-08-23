@@ -1,4 +1,6 @@
-import json
+import ast
+
+import pandas as pd
 
 from config import Config
 
@@ -6,18 +8,36 @@ from config import Config
 class SynRetriever:
 
     def __init__(self):
-        # Retrieve the json data from both the files.
+        # Reads the raw sources directly (was ThesaurusDict.json +
+        # SynonymsDict.json, built by data_pipeline/csvToJson.py from the
+        # same two files). Deliberately NOT using data_utils.py's
+        # family2_word_synonyms.parquet here: that table precomputes the
+        # combined candidate list for one specific (word, word's-own-pos)
+        # pair, which loses the synonym-scraper source's actual semantics --
+        # its candidates apply to a word regardless of which POS it's used
+        # as, not just the POS recorded in the CEFR dataset. Keeping the two
+        # sources separate and unioning them per-query, like the original,
+        # preserves that.
         try:
-            with open(Config.DATA_FOLDER + '/ThesaurusDict.json') as thes_json_file:
-                self.thes_json = json.load(thes_json_file)
+            synonyms = pd.read_csv(f"{Config.RAW_DATA_FOLDER}/synonyms_scrape.csv").rename(
+                columns={"Word": "word", "Synonyms": "synonym_list"})
+            thesaurus = pd.read_csv(f"{Config.RAW_DATA_FOLDER}/thesaurus_scrape.csv").rename(
+                columns={"Word": "word", "Synonyms": "synonym_list"})
+            synonyms["synonym_list"] = synonyms["synonym_list"].apply(ast.literal_eval)
+            thesaurus["synonym_list"] = thesaurus["synonym_list"].apply(ast.literal_eval)
 
-            with open(Config.DATA_FOLDER + '/SynonymsDict.json') as syn_json_file:
-                self.syn_json = json.load(syn_json_file)
-        except:
+            # word (pos-agnostic) -> candidates
+            self.syn_json = dict(zip(synonyms["word"].str.lower(), synonyms["synonym_list"]))
+            # word_pos, e.g. "absolute_aj" (thesaurus_scrape.csv's own short-acronym
+            # POS suffix, already in this form) -> candidates
+            self.thes_json = dict(zip(thesaurus["word"].str.lower(), thesaurus["synonym_list"]))
+        except Exception:
             print('Error in retrieving file')
+            self.syn_json = {}
+            self.thes_json = {}
 
     def retrieveSynsByPos(self, word, Pos):
-        """Functions retrieves only synonyms for PoS from both sources 
+        """Functions retrieves only synonyms for PoS from both sources
 
         Args:
             word (string): Word to be found

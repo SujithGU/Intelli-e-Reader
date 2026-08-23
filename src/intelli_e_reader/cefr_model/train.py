@@ -147,7 +147,7 @@ if __name__ == '__main__':
                             'VBP': 'VERB', 'WDT': '', 'WP': '', 'WP$': '', 'WRB': '', 'EXC': ''}
 
     # Read the all all_english_words_tagged_file for encoding purpose - Contains 370,100 words
-    df = pd.read_csv(f'{Config.DATA_FOLDER}/all_english_words_tagged.csv')
+    df = pd.read_csv(f'{Config.PROCESSED_DATA_FOLDER}/all_english_words_tagged.csv')
 
     # Encode words
     word_list = np.array(df['eng_words'])
@@ -189,7 +189,7 @@ if __name__ == '__main__':
 
     # Read the master_cefr with ngram's - Contains 7,620 words
 
-    w_df = pd.read_csv(f'{Config.DATA_FOLDER}/master_cefr_with_ngram.csv')
+    w_df = pd.read_csv(f'{Config.PROCESSED_DATA_FOLDER}/master_cefr_with_ngram.csv')
 
     for index, row in w_df.iterrows():
         word = row['word']
