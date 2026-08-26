@@ -4,7 +4,7 @@ Intelli-e-Reader takes a PDF and rewrites it to be easier to read for an English
 
 Difficulty is measured against **CEFR** (the Common European Framework of Reference for Languages), the same A1–C2 scale used in language teaching. This project collapses it to three buckets — **A** (easy), **B** (medium), **C** (hard) — and only ever simplifies *toward* A.
 
-This started as a 2021 student project ([`Report/`](Report/) and [`notebook/Intelli_eReader.ipynb`](notebook/Intelli_eReader.ipynb) are the original writeup and prototype); this repo is a restructured, working version of it.
+This started as a 2021 project ([`Report/`](Report/) and [`notebook/Intelli_eReader.ipynb`](notebook/Intelli_eReader.ipynb) are the original writeup and prototype); this repo is a restructured, working version of it.
 
 ## Architecture
 
@@ -62,7 +62,7 @@ Try it end-to-end by uploading `data/pdf/Treasure Island.pdf` (already in the re
 
 ## Data
 
-**`data/raw/`** — the original collected sources: two independent word-difficulty ratings (a scrape of the English Profile website, and a small teacher survey), two independently-scraped synonym sources, and a general ~370,000-word English vocabulary list. These are committed to the repo — they can't be easily reconstructed if the original scrapers or sources ever go away.
+**`data/raw/`** — the original collected sources: two independent word-difficulty ratings (a scrape of the English Profile website, and a teacher survey), two independently-scraped synonym sources, a general ~370,000-word English vocabulary list, and **EFLLex** (a published academic CEFR lexicon, added later — see below). These are committed to the repo — they can't be easily reconstructed if the original scrapers or sources ever go away.
 
 **`data/processed/`** — tables *derived* from `data/raw/`, built by [`src/intelli_e_reader/data_utils.py`](src/intelli_e_reader/data_utils.py). Most of these are **not committed** — they're cheap to regenerate, so they're left out of the repo rather than carried around as build output. Before running the app for the first time (or after pulling changes to `data/raw/`), run:
 
@@ -71,10 +71,28 @@ python -m intelli_e_reader.data_utils
 ```
 
 This builds:
-- `family2_word_synonyms.parquet` — one row per (word, part of speech): its CEFR rating plus its combined candidate synonyms. This is what `reader/cefr.py` and the live pipeline actually depend on.
+- `family2_word_synonyms.parquet` — one row per (word, part of speech): its CEFR rating plus its combined candidate synonyms (~18,600 words total — see below for where that number comes from). This is what `reader/cefr.py` and the live pipeline actually depend on.
 - `family2_synonym_candidates_with_cefr.parquet` — candidate synonyms that themselves have a CEFR rating (not used by the live app; useful for analysis).
 - `family3_vocabulary.parquet` — the full vocabulary with part-of-speech tags (feeds `cefr_model/`, not the live app).
 
 Two further processed files *are* committed, since regenerating them is slow or depends on an external service: `all_english_words_tagged.csv` (re-tagging ~370,000 words) and `master_cefr_with_ngram.csv` (re-scraping Google's Ngram viewer for usage-frequency trends, via `src/intelli_e_reader/data_pipeline/generate_ngram_data_for_cefr_master.py` and `google_ngram_parser.py`). Both only feed the experimental `cefr_model/`, not the live app.
 
 **[`notebook/Dataset-EDA.ipynb`](notebook/Dataset-EDA.ipynb)** is where this raw-to-processed logic was worked out and explored before being finalized into `data_utils.py` — it's for exploration only and doesn't save anything itself.
+
+### Improving the word-CEFR dataset
+
+The original dataset merged two sources — a scrape of Cambridge's [English Profile](https://www.englishprofile.org/) wordlist and a small teacher survey — with a simple rule: if both rated the same word, English Profile's rating won. That rule had never actually been checked against real numbers.
+
+To sanity-check it, the ratings were cross-referenced against [EFLLex](https://cental.uclouvain.be/cefrlex/efllex/) (UCLouvain's CEFRLex project — an independently built, corpus-derived CEFR lexicon covering A1–C1). That turned up two real, previously-hidden problems:
+
+- **Weak agreement with an independent source.** Even after coarsening both ratings down to easy/medium/hard, exact agreement with EFLLex was only 44.6% on the ~6,300 words both cover, and chance-corrected agreement (Cohen's kappa — a stricter measure that discounts however much two sources would coincidentally agree just by guessing) stayed weak at 0.11.
+
+  ![Cross-checking our CEFR ratings against EFLLex](assets/images/efllex_agreement.png)
+
+- **The merge itself was silently discarding most of the teacher survey.** Digging into why agreement was so weak led back to the merge: of the ~7,100 words both our own sources rated, they actually disagreed 72.8% of the time — and on every one of those, English Profile's rating silently won, not because it had been checked to be more reliable, but because the teacher-survey file being merged had already been rounded and filtered down from ~7,000 words to ~4,000 by a since-lost script, throwing away real signal. Switching to the fuller, unrounded per-teacher averages recovered that signal and added ~2,000 more rated words, while still keeping English Profile — the larger, professionally curated source — as the deciding vote on any real disagreement.
+
+With both original sources on solid footing, EFLLex was then merged in a third time, purely **additively**: ~8,900 more words that neither original source rated at all, added without overriding a single existing rating.
+
+![Word-CEFR dataset coverage growth](assets/images/dataset_growth.png)
+
+Two honest gaps worth knowing about in the newly-added words: EFLLex has no C2 label at all (its source texts top out at C1), so these words can never be rated harder than C1; and none of them have synonym candidates yet, since the synonym scrapers were only ever run against the original ~7,600-word vocabulary.

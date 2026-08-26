@@ -50,7 +50,9 @@ notebook = [
     "jupyter",
     "matplotlib",
     "seaborn",
-    "pyarrow"
+    "pyarrow",
+    "kagglehub[pandas-datasets]",
+    "openpyxl"
 ]
 
 [tool.setuptools.packages.find]

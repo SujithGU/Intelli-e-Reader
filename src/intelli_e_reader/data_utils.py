@@ -22,10 +22,30 @@ def save_processed(df: pd.DataFrame, name: str) -> None:
 
 def build_family1_word_cefr() -> pd.DataFrame:
     """Word CEFR difficulty: merge the English Profile scrape (cleaned) with
-    the teacher survey ratings, English Profile winning on overlap."""
+    the teacher survey ratings, English Profile winning on overlap -- it's
+    Cambridge's English Vocabulary Profile (corpus of real graded exam
+    scripts), a more authoritative source than a 3-teacher survey.
+
+    Reads teacher_survey_avg_scores.csv (raw per-word averages across the
+    teachers, e.g. 1.667) rather than the older teacher_survey_cefr_ratings.csv
+    (pre-rounded to a whole 1-6 level by a since-lost script, and missing
+    ~2,200 words this file has). English Profile still wins on any (word,
+    pos) both sources cover, so the rounding scheme below only actually
+    determines the label for words English Profile doesn't rate at all.
+    Rounding is pandas' default round-half-to-even (e.g. 2.5 -> 2, 3.5 -> 4),
+    not round-half-up -- noted since CEFR bucket boundaries fall exactly on
+    .5 for a 1-6 scale.
+    """
     scraped = pd.read_csv(f"{Config.RAW_DATA_FOLDER}/english_profile_cleaned.csv").assign(source="english_profile")
-    teachers = pd.read_csv(f"{Config.RAW_DATA_FOLDER}/teacher_survey_cefr_ratings.csv").assign(source="teacher_survey")
-    teachers = teachers.rename(columns={"cefr_level_avg": "cefr_int", "cefr_level": "cefr"})
+
+    teachers = pd.read_csv(f"{Config.RAW_DATA_FOLDER}/teacher_survey_avg_scores.csv").rename(
+        columns={"Word": "word", "PoS": "pos", "Teachers Avg": "cefr_int"})
+    teachers = teachers.dropna(subset=["cefr_int"])
+    teachers["word"] = teachers["word"].str.lower().str.strip()
+    teachers = teachers.drop_duplicates(subset=["word", "pos"], keep="first")
+    teachers["cefr_int"] = teachers["cefr_int"].round().astype(int)
+    teachers["cefr"] = teachers["cefr_int"].map({1: "A", 2: "A", 3: "B", 4: "B", 5: "C", 6: "C"})
+    teachers = teachers.assign(source="teacher_survey")
 
     df = pd.concat([scraped, teachers], ignore_index=True)
     # pandas silently reads the literal "NA" pos value as a real NaN by default,
@@ -34,6 +54,53 @@ def build_family1_word_cefr() -> pd.DataFrame:
     df["pos"] = df["pos"].fillna("NA")
     df = df.drop_duplicates(subset=["word", "pos"], keep="first")
     return df
+
+
+def build_efllex_cefr() -> pd.DataFrame:
+    """Load EFLLex (UCLouvain's CEFRLex project -- normalized word frequency
+    across ~40 graded readers + a handful of ESL coursebooks, not a large
+    general corpus) and derive a per-word CEFR label the same way as
+    Dataset-EDA.ipynb: whichever level-band has the highest frequency share
+    for that word. EFLLex's source texts top out at C1 -- it has no C2
+    label at all, so cefr_int here is always 1-5, never 6."""
+    ptb_to_universal = {
+        "NN": "NOUN", "JJ": "ADJ", "VB": "VERB", "RB": "ADV",
+        "CD": "NUM", "IN": "ADP", "UH": "EXC", "PRP": "PRON",
+        "PRP$": "PRON", "DT": "DET", "RP": "PART", "MD": "VERB",
+        "PR": "PRON", "CC": "CONJ", "WP": "PRON", "WP$": "PRON",
+        "WRB": "ADV", "PDT": "DET", "WDT": "DET", "TO": "ADP",
+        "EX": "PRON", "FW": "X", "XX": "X", "RH": "X",
+    }
+    efllex = pd.read_csv(f"{Config.RAW_DATA_FOLDER}/EFLLex.tsv", sep="\t")
+    drop_cols = ["word", "tag", "total_freq@total", "nb_doc@total", "face2face@total"]
+    level_cols = efllex.columns.difference(drop_cols)
+    cefr_label = efllex[level_cols].idxmax(axis=1).str.rsplit("@").str[-1].str.strip()
+
+    efllex = efllex[["word", "tag", "total_freq@total"]].rename(
+        columns={"tag": "pos", "total_freq@total": "total_freq"})
+    efllex["pos"] = efllex["pos"].str.strip().replace(ptb_to_universal)
+
+    ordinal_map = {"a1": 1, "a2": 2, "b1": 3, "b2": 4, "c1": 5, "c2": 6}
+    bucket_map = {1: "A", 2: "A", 3: "B", 4: "B", 5: "C", 6: "C"}
+    efllex["cefr_int"] = cefr_label.map(ordinal_map)
+    efllex["cefr"] = efllex["cefr_int"].map(bucket_map)
+    efllex["source"] = "efllex"
+    return efllex
+
+
+def extend_family1_with_efllex(family1_word_cefr: pd.DataFrame, efllex_cefr: pd.DataFrame) -> pd.DataFrame:
+    """Additive-only vocabulary expansion: appends (word, pos) pairs EFLLex
+    covers that English Profile / the teacher survey don't rate at all.
+    Never overrides an existing family1 rating -- English Profile stays GT
+    wherever it has an opinion (see build_family1_word_cefr's docstring).
+    Appended rows have no synonym_list (Family 2's synonym sources were
+    never scraped for these words) and a real total_freq where family1's
+    original rows don't have one at all."""
+    known = family1_word_cefr[["word", "pos"]]
+    efllex_only = efllex_cefr.merge(known, on=["word", "pos"], how="left", indicator=True)
+    efllex_only = efllex_only[efllex_only["_merge"] == "left_only"].drop(columns="_merge")
+
+    return pd.concat([family1_word_cefr, efllex_only], ignore_index=True)
 
 
 def build_family2_synonyms(family1_word_cefr: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
@@ -120,6 +187,11 @@ def build_all() -> None:
     # family1_word_cefr is computed but not saved on its own -- see
     # build_family2_synonyms' docstring.
     family1_word_cefr = build_family1_word_cefr()
+    # Additive-only vocabulary expansion from EFLLex -- see
+    # extend_family1_with_efllex's docstring. English Profile/teacher-survey
+    # ratings are never overridden, only supplemented for words neither of
+    # them rates at all.
+    family1_word_cefr = extend_family1_with_efllex(family1_word_cefr, build_efllex_cefr())
 
     family2_word_synonyms, family2_candidates_with_cefr = build_family2_synonyms(family1_word_cefr)
     save_processed(family2_word_synonyms, "family2_word_synonyms")
