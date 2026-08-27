@@ -1,0 +1,29 @@
+[
+  {
+    "word": "you",
+    "pos": "PRON",
+    "cefr_int": 1,
+    "cefr_level": "A1",
+    "confidence": "high",
+    "reasoning": "essential pronoun, everyday",
+    "source_note": "Agrees exactly between English Profile and EFLLex."
+  },
+  {
+    "word": "learn",
+    "pos": "VERB",
+    "cefr_int": 3,
+    "cefr_level": "B1",
+    "confidence": "high",
+    "reasoning": "familiar-topic verb, concrete",
+    "source_note": "Agrees exactly between English Profile and EFLLex."
+  },
+  {
+    "word": "natural",
+    "pos": "ADJ",
+    "cefr_int": 5,
+    "cefr_level": "C1",
+    "confidence": "medium",
+    "reasoning": "abstract Latinate adjective",
+    "source_note": "Agrees exactly between English Profile and EFLLex."
+  }
+]

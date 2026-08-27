@@ -8,6 +8,7 @@ class Config:
     # data/ is split by whether prod code reads it directly:
     RAW_DATA_FOLDER = DATA_FOLDER+"/raw"              # only touched by src/intelli_e_reader/data_pipeline/ scripts
     PROCESSED_DATA_FOLDER = DATA_FOLDER+"/processed"  # read directly by reader/ or cefr_model/
+    FEATURES_FOLDER = DATA_FOLDER+"/features"         # external psycholinguistic datasets (AoA, concreteness) for cefr_model/
 
     ASSETS_FOLDER = PROJECT_ROOT_FOLDER+"/assets"
     OUTPUT_FOLDER = DATA_FOLDER+"/output"

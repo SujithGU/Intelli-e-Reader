@@ -68,15 +68,25 @@ data/uploads/
 *.log
 data/.Rapp.history
 
-### Trained model artifacts (regenerate via src/intelli_e_reader/cefr_model/train.py) ###
-models/cefr_prediction/optimal_models/
-models/cefr_prediction/*.h5
-models/cefr_prediction/*.pkl
-
 ### Processed data (regenerate via `python -m intelli_e_reader.data_utils`) ###
 data/processed/*.parquet
+
+### LLM baseline batch requests/results (regenerate via notebook/GeminiBatch-Inference-Test.ipynb) ###
+batch_jobs/
+
+### MLflow local tracking (regenerate by running the training notebook) ###
+mlflow.db
+mlruns/
+mlartifacts/
+
+### TensorBoard logs (regenerate by running the training notebook) ###
+runs/
 
 ### Local-only, not published ###
 Report/
 ppt/
 context.md
+
+### Secrets -- never commit ###
+.env
+.env.*
