@@ -1,0 +1,3 @@
+notebook/*.ipynb linguist-documentation
+Report/* linguist-documentation
+reader-ui/** linguist-vendored=false
