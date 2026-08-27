@@ -1,11 +1,11 @@
 import matplotlib.pyplot as plt
-import seaborn as sns
-import pandas as pd
 import numpy as np
+import pandas as pd
+import seaborn as sns
 from sklearn.metrics import cohen_kappa_score
 
 
-def plot_pos_distribution(df:pd.Dataframe,x_axis='pos',normalise=True):
+def plot_pos_distribution(df: pd.DataFrame, x_axis='pos', normalise=True):
     plt.figure(figsize=(15,6))
     sns.histplot(df,x=x_axis,stat='percent' if normalise else 'count')
     plt.title('Distribution of POS')
